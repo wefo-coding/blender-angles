@@ -1,2 +1,2 @@
-# blender-angles
+# Blender Angles
 Blender Add-on to create angled pipes.

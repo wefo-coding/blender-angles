@@ -51,12 +51,13 @@ def angle(v1, v2):
     return math.acos(dotproduct(v1, v2) / (length(v1) * length(v2)))
 
 
-def get_orientation(name, context=bpy.context):
+def get_orientation(name):
     """
     adapted from batFINGER's code (CC-BY-SA 3.0), see:
     https://blender.stackexchange.com/questions/132409
     /how-do-i-access-a-custom-transform-orientation-by-name-in-blender-2-8
     """
+    context = bpy.context
     scene = context.scene
     slots = scene.transform_orientation_slots
     old_orientation = slots[0].type

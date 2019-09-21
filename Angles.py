@@ -1,15 +1,16 @@
 # # # # # # # # # # # # # # # # # #
 #             Angles              #
 #        by Florian Otten         #
+#   (2.8 port by Daniel Hilpert)  #
 # # # # # # # # # # # # # # # # # #
 
 bl_info = {"name": "Angles",
            "description": "With this addon you can create angles and align "
                           "meshes.",
-           "author": "Florian Otten",
-           "version": (0, 2),
+           "author": "Florian Otten, Daniel Hilpert",
+           "version": (0, 3),
            "blender": (2, 80, 0),
-           "location": "View3D > Tools > Angles",
+           "location": "View3D > Sidebar > Angles",
            "support": "COMMUNITY",
            "wiki_url": "http://code.we-fo.de/blender/angles/",
            "tracker_url": "http://webentwicklung-otten.de/Home/Contact/",
@@ -23,7 +24,6 @@ import bpy
 import bmesh
 import math
 from mathutils import *
-from math import *
 
 
 # # # # # # # # # # # # # # # # # #
@@ -52,21 +52,22 @@ def angle(v1, v2):
 
 
 def get_orientation(name, context=bpy.context):
-    # from https://blender.stackexchange.com/questions/132409/
-    # how-do-i-access-a-custom-transform-orientation-by-name-in-blender-2-8
+    """
+    adapted from batFINGER's code (CC-BY-SA 3.0), see:
+    https://blender.stackexchange.com/questions/132409
+    /how-do-i-access-a-custom-transform-orientation-by-name-in-blender-2-8
+    """
     scene = context.scene
     slots = scene.transform_orientation_slots
-    old_co = slots[0].type
+    old_orientation = slots[0].type
     context.area.type = 'VIEW_3D'
     try:
         bpy.ops.transform.select_orientation(orientation=name)
-        co = slots[0].custom_orientation
+        orientation = slots[0].custom_orientation
     except:
-        co = None
-    # should be ok and exist
-    bpy.ops.transform.select_orientation(orientation=old_co)
-    context.area.type = 'TEXT_EDITOR'
-    return co
+        orientation = None
+    bpy.ops.transform.select_orientation(orientation=old_orientation)
+    return orientation
 
 
 def setOrientation(inverse=False):

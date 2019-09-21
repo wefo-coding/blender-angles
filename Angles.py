@@ -264,10 +264,7 @@ def extrudeAngle(angle, inverse=False):
 
     # Die alten Punkte auf Höhe des niedrigsten Punktes setzen. #
     for x in range(0, int(len(bm.verts) / 2)):
-        if inverse:
-            bm.verts[x].co.z = -minZ
-        else:
-            bm.verts[x].co.z = minZ
+        bm.verts[x].co.z = -minZ
 
     # Wechsle in den Object mode. #
     bpy.ops.object.mode_set(mode='OBJECT')
